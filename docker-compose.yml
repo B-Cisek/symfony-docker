@@ -28,6 +28,7 @@ services:
       - symfony_app_vendor:/var/www/symfony/vendor
     networks:
       - symfony_app
+
   nginx:
     build:
       context: ./.docker/nginx
@@ -41,6 +42,18 @@ services:
       - symfony_app
     env_file:
       - ./.docker/.env.nginx
+
+  rabbitmq:
+    image: rabbitmq:3.12.7-management-alpine
+    ports:
+      - '15672:15672'
+    volumes:
+      - ./docker/volumes/rabbitmq:/var/lib/rabbitmq/mnesia
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - symfony_app
 
 volumes:
   symfony_app_var:

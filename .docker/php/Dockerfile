@@ -13,12 +13,14 @@ RUN apt-get update && apt-get install -y \
     zlib1g-dev \
     libzip-dev \
     libfreetype6-dev \
+    librabbitmq-dev \
     libpng-dev \
     libjpeg-dev \
     libicu-dev  \
     libonig-dev \
     libxslt1-dev \
     acl \
+    && pecl install amqp && docker-php-ext-enable amqp \
     && echo 'alias sf="php bin/console"' >> ~/.bashrc
 
 RUN docker-php-ext-configure gd --with-jpeg --with-freetype
